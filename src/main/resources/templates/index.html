@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dhinesh's Portfolio</title>
+    <link rel="stylesheet" th:href="@{/styles/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/styles/css/mediaqueries.css}" />
+    <script th:src="@{./js/card.js}" defer></script>
+    <script th:src="@{./js/youtube.js}" defer></script>
+    <!-- Fontawesome Link for Icons -->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css}">
+
+</head>
+<body>
+<nav id="desktop-nav">
+    <div class="logo">Hello World!</div>
+    <div>
+        <ul class="nav-links">
+            <li><a th:href="@{#about}">About</a></li>
+            <li><a th:href="@{#experience}">Experience</a></li>
+            <li><a th:href="@{#projects}">Projects</a></li>
+        </ul>
+    </div>
+</nav>
+<nav id="hamburger-nav">
+    <div class="logo">Hello World!</div>
+    <div class="hamburger-menu">
+        <div class="hamburger-icon" th:onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-links">
+            <li><a th:href="@{#about}" th:onclick="toggleMenu()">About</a></li>
+            <li><a th:href="@{#experience}" th:onclick="toggleMenu()">Experience</a></li>
+            <li><a th:href="@{#projects}" th:onclick="toggleMenu()">Projects</a></li>
+        </div>
+    </div>
+</nav>
+<section id="profile">
+    <div class="section__pic-container">
+        <img th:src="@{${profilepic}}" th:alt="${myName}" />
+    </div>
+    <div class="section__text">
+        <p class="section__text__p1">Hello, I'm</p>
+        <h1 class="title" th:text="${myName}">name</h1>
+
+        <div class="animated-text">
+            <ul class="sec-texts">
+                <li th:each="title : ${titles}"><span th:utext="${title}">Title</span></li>
+            </ul>
+        </div>
+
+
+        <div class="btn-container">
+            <a th:href="@{/download}">
+                <button class="btn btn-color-2">
+                    Download CV
+                </button>
+            </a>
+            <button class="btn btn-color-1" th:onclick="@{location.href='./#contact'}">
+                Contact Info
+            </button>
+        </div>
+        <div id="socials-container">
+            <a th:each="media : ${social}" th:href="@{${media.onClickAction}}" th:target="_blank">
+                <img
+                        th:src="@{${media.assetUrl}}"
+                        th:alt="${media.altName}"
+                        class="icon"
+                />
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <p class="section__text__p1">Get To Know More</p>
+    <h1 class="title">About Me</h1>
+    <div class="section-container">
+        <div class="section__pic-container">
+            <img
+                    th:src="@{${aboutpic}}"
+                    th:alt="${myName}"
+                    class="about-pic"
+            />
+        </div>
+        <div class="about-details-container">
+            <div class="about-containers">
+                <div class="details-container">
+                    <img
+                            th:src="@{${experience}}"
+                            alt="Experience icon"
+                            class="icon"
+                    />
+                    <h3>Experience</h3>
+                    <p><span th:text="${myExpInYear}">exp</span>+ months <br />Software Development <em> (2023 - till date)</em></p>
+                </div>
+                <div class="details-container">
+                    <img
+                            th:src="@{${education}}"
+                            alt="Education icon"
+                            class="icon"
+                    />
+                    <h3>Education</h3>
+                    <p>B.E. (Computer Science) <br />Bachelors Degree <em> (2020 - 2024)</em></p>
+                </div>
+            </div>
+			<div class="text-container">
+			    <p>
+			        Hey there! I'm from Tamil Nadu, India. I have <span th:text="${myExpInYear}">exp</span> months of professional experience in the IT sector, specializing in full-stack development. My passion lies in building efficient, scalable software solutions, and I've had the opportunity to work with multinational clients. A big fan of Java and modern web technologies like React.js and Spring Boot!
+			    </p>
+			    <p>
+			        When I’m not working on coding projects, I love staying in, enjoying some downtime, and binge-watching my favorite series. I’m not much of an outdoor person, but I believe in continuous learning and improving my skills. I thrive in environments where I can contribute creatively to problem-solving and deliver impactful results.
+			    </p>
+			    <p>
+			        I speak English fluently and, of course, Java ;-)! I’m always open to new challenges and look forward to growing as a developer and contributing to exciting projects.
+			    </p>
+			</div>
+            </div>
+        </div>
+    </div>
+    <img
+            th:src="@{${arrow.assetUrl}}"
+            th:alt="${arrow.altName}"
+            class="icon arrow"
+            th:onclick="@{location.href='./#'}"
+    />
+</section>
+
+<section id="experience">
+    <p class="section__text__p1">Explore My</p>
+    <h1 class="title">Experience</h1>
+    <div class="experience-details-container">
+        <div class="about-containers">
+            <div class="details-container">
+                <h2 class="experience-sub-title">Frontend Development</h2>
+                <div class="article-container">
+                    <article th:each="exp : ${frontend}">
+                        <img
+                                th:src="@{${checkmark}}"
+                                alt="Experience icon"
+                                class="icon"
+                        />
+                        <div>
+                            <h3 th:text="${exp.technology}">Technology</h3>
+                            <p th:text="${exp.expLevel}">Experience</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="details-container">
+                <h2 class="experience-sub-title">Backend Development</h2>
+                <div class="article-container">
+                    <article th:each="exp : ${backend}">
+                        <img
+                                th:src="@{${checkmark}}"
+                                alt="Experience icon"
+                                class="icon"
+                        />
+                        <div>
+                            <h3 th:text="${exp.technology}">Technology</h3>
+                            <p th:text="${exp.expLevel}">Experience</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="about-containers">
+            <div class="details-container">
+                <h2 class="experience-sub-title">Databases</h2>
+                <div class="article-container">
+                    <article th:each="exp : ${database}">
+                        <img
+                                th:src="@{${checkmark}}"
+                                alt="Experience icon"
+                                class="icon"
+                        />
+                        <div>
+                            <h3 th:text="${exp.technology}">Technology</h3>
+                            <p th:text="${exp.expLevel}">Experience</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+			</section>
+
+			<section id="projects">
+			    <p class="section__text__p1">Browse My Recent</p>
+			    <h1 class="title">Projects</h1>
+			    <div class="experience-details-container">
+			        <div class="about-containers">
+			            <div class="details-container color-container">
+			                <div class="article-container">
+			                    <h2 class="experience-sub-title project-title">Medicinal Plant Recognition System</h2>
+			                    <p>
+			                        A deep learning-driven multilingual system for the recognition and categorization of medicinal plants, providing detailed elucidation.
+			                    </p>
+			                    <p><strong>Tech Stack:</strong> Python, Google Colab, Kaggle</p>
+			                </div>
+			            </div>
+			            <div class="details-container color-container">
+			                <div class="article-container">
+			                    <h2 class="experience-sub-title project-title">Medico Tracker - A Full Stack App</h2>
+			                    <p>
+			                        Developed a web application that facilitates blood donation and rehabilitation services, providing an easy-to-use platform for users.
+			                    </p>
+			                    <p><strong>Tech Stack:</strong> React.js, Spring Boot, MySQL</p>
+			                </div>
+			            </div>
+			            <div class="details-container color-container">
+			                <div class="article-container">
+			                    <h2 class="experience-sub-title project-title">Guess The Word</h2>
+			                    <p>
+			                        A web-based game where users guess words with limited trials. It features a reload option for starting a new game with randomly generated words.
+			                    </p>
+			                    <p><strong>Tech Stack:</strong> Spring Boot, Java, SQL, Thymeleaf</p>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</section>
+<section id="contact">
+    <p class="section__text__p1">Get in Touch</p>
+    <h1 class="title">Contact Me</h1>
+    <div class="contact-info-upper-container">
+        <div class="contact-info-container">
+            <img
+                    th:src="@{${email}}"
+                    alt="Email icon"
+                    class="icon contact-icon email-icon"
+            />
+            <p><a th:href="@{${mailtoemail}}" th:target="_blank" th:text="${myEmail}">email</a></p>
+        </div>
+        <div class="contact-info-container">
+            <img
+                    th:src="@{/assets/linkedin.png}"
+                    alt="LinkedIn icon"
+                    class="icon contact-icon"
+            />
+            <p><a th:href="@{${linkedin}}" th:target="_blank">LinkedIn</a></p>
+        </div>
+    </div>
+</section>
+<footer>
+    <nav>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a th:href="@{./#about}">About</a></li>
+                <li><a th:href="@{./#experience}">Experience</a></li>
+                <li><a th:href="@{./#projects}">Projects</a></li>
+            </ul>
+        </div>
+    </nav>
+    <p>Made with ❤️ using Thymeleaf.</p>
+</footer>
+<script type="text/javascript" th:src="@{/js/script.js}"></script>
+</body>
+</html>
